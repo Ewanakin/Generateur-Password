@@ -4,13 +4,35 @@ class BddPassword:
         self.host = host
         self.user = user
         self.password = password
+        self.database = ""
+        self.mydb = ""
+        self.mycursor = ""
 
-    def DbConnexion(self):
+    # définir la nouvelle valeur de la database pour la connexion a la db
+    def set_database(self, database):
+        self.database = database
+
+    # initialisation de la connexion
+    def CreateConnexion(self):
         try:
-            return mysql.connector.connect(
+            self.mydb = mysql.connector.connect(
                 host=self.host,
                 user=self.user,
-                password=self.password
+                password=self.password,
             )
-        except:
             return True
+        except:
+            return False
+
+    # methode de connexion à une base de donnée
+    def ConnectToDb(self):
+        try:
+            self.mydb = mysql.connector.connect(
+                host=self.host,
+                user=self.user,
+                password=self.password,
+                database=self.database,
+            )
+            return True
+        except:
+            return False
