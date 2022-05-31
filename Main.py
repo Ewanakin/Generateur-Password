@@ -1,18 +1,33 @@
 from PasswordGenerator import PasswordGenerator
+from BddPassword import BddPassword
+
+#vérification si la saisie n'est pas vide
 def verif_empty(saisieUti):
     if saisieUti == "":
         return True
-
+#vérification de la saisie utilisateur
 def verif_char(saisieUti):
     for caractere in range(len(saisieUti)):
         for banCharacter in range(len(listCara)):
             if saisieUti[caractere] == listCara[banCharacter]:
                 return True
+#fonction pour saisir les information de connexion
+def saisieIdBdd():
+    host = input("merci de saisir l'host de la base de donnée : ")
+    user = input("merci de saisir le nom d'utilisateur de la base de donnée : ")
+    password = input("merci de saisir le mot de passe de la base de donnée : ")
+    connexionDb = BddPassword(host, user, password)
+    if connexionDb.DbConnexion():
+        print("Connexion réussie")
+    else:
+        return True
 
+while saisieIdBdd():
+    print("Les informations ne sont correctes")
 
 listCara = ["/", "@", ",", ".", "<", ">", "!", "§", ":", "?", ";", "*", "^", "{", "}", "=", "[", "]", "(", ")", "|", "`"]
 objectPassword = []
-# saisie des valeurs par un utilisateur et création d'un objet appPassword qui contient le mot de passe générer et le nom de l'app
+# Création d'un mot de passe associé à un nom d'application
 createPassword = input("Souhaitez vous créer un mot de passe pour une application y/yes ? : ")
 while createPassword == "y" or createPassword == "yes":
     verifLenPassword = True
