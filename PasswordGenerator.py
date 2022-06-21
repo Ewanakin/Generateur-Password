@@ -21,3 +21,5 @@ class PasswordGenerator:
         self.password = "".join(self.caracPasswordList)
 
 
+
+

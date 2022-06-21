@@ -18,7 +18,8 @@ def connexionBdd():
     host = input("merci de saisir l'host de la base de donnée : ")
     user = input("merci de saisir le nom d'utilisateur de la base de donnée : ")
     password = input("merci de saisir le mot de passe de la base de donnée : ")
-    connexionDb = BddPassword(host, user, password)
+    database = input("merci de saisir le mot de passe de la base de donnée : ")
+    connexionDb = BddPassword(host, user, password, database)
     # si connexion réussi alors renvoyer l'objet de connexion
     if connexionDb.CreateConnexion():
         print("Connexion réussie")
@@ -29,6 +30,7 @@ def connexionBdd():
 connBdd = connexionBdd()
 while connBdd == False:
     print("Les informations sont incorrectes")
+    connBdd = connexionBdd()
 
 
 listCara = ["/", "@", ",", ".", "<", ">", "!", "§", ":", "?", ";", "*", "^", "{", "}", "=", "[", "]", "(", ")", "|", "`"]
@@ -37,7 +39,7 @@ objectPassword = []
 createPassword = input("Souhaitez vous créer un mot de passe pour une application y/yes ? : ")
 while createPassword == "y" or createPassword == "yes":
     verifLenPassword = True
-    appName = input("test : ")
+    appName = input("Saisir le nom de l'application : ")
     # boucle vérification de la saisie du nom de l'appli
     while verif_empty(appName) or verif_char(appName):
         if not verif_empty(appName):
@@ -71,3 +73,4 @@ while createPassword == "y" or createPassword == "yes":
 for passwordApp in objectPassword:
     print(passwordApp.get_appName())
     print(passwordApp.get_password())
+    connBdd.insertPassword(passwordApp.get_appName(), passwordApp.get_password())
