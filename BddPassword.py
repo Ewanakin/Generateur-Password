@@ -7,11 +7,6 @@ class BddPassword:
         self.database = database
         self.mydb = ""
 
-
-    """# définir la nouvelle valeur de la database pour la connexion a la db
-    def set_database(self, database):
-        self.database = database"""
-
     # initialisation de la connexion
     def CreateConnexion(self):
         try:
@@ -25,26 +20,17 @@ class BddPassword:
         except:
             return False
 
-    """    # methode de connexion à une base de donnée
-    def ConnectToDb(self, database):
-        try:
-            self.mydb = mysql.connector.connect(
-                host=self.host,
-                user=self.user,
-                password=self.password,
-                database=database,
-            )
-            return True
-        except:
-            return False
-    """
-    def insertPassword(self, appName, password):
+    def insertPassword(self, application, username, password):
         cursor = self.mydb.cursor()
-        req = ("INSERT INTO password(appName, password) VALUES(%s,%s)")
-        data = (appName, password)
-
+        req = ("INSERT INTO password(application, username, password) VALUES(%s,%s,%s)")
+        data = (application, username, password)
         cursor.execute(req, data)
-
         self.mydb.commit()
-
         cursor.close()
+
+    def selectPassword(self):
+        cursor = self.mydb.cursor()
+        cursor.execute("SELECT * FROM password")
+        passwordList = cursor.fetchall()
+        cursor.close()
+        return passwordList
